@@ -1,20 +1,59 @@
 import React, {Component} from 'react';
 
-import { TabBar, Icon } from 'antd-mobile';
+// import {Link} from "react-router-dom";
+
+
+import { TabBar } from 'antd-mobile';
 import "./index.scss";
 
-
+/**
+ *    @param  badage     number/string  徽标数
+ *    @param  dot        boolean        是否在右上角显示小红点
+ *    @param  selected   boolean        是否选中
+ *    @param  onpress    function       点击触发 (需要自己改变组件  state & selecte={true})
+ *    @param  icon       img source     默认展示图片
+ *    @param  selectedIcon img source   选中后展示图片
+ *    @param  title       string        标题文字
+ *    @param iconStyle   String         iCon样式 {width: 28, height: 28}
+ *
+ */
 class BottomNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'redTab',
+      selectedTab: 'shenghuo',
       hidden: false,
+      navData: [
+        {
+          title: '生活',
+          icon: 'https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg',
+          selectedIcon: 'https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg',
+          badge: 2,
+          onpressSelectedTab: 'shenghuo'
+        },
+        {
+          title: '口碑',
+          icon: 'https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg',
+          selectedIcon: 'https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg',
+          badge: 'new',
+          onpressSelectedTab: 'koubei'
+        },
+        {
+          title: '朋友',
+          icon: 'https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg',
+          selectedIcon: 'https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg',
+          badge: 'update',
+          dot: true,
+          onpressSelectedTab: 'friend'
+        },
+        {
+          title: '我的',
+          icon: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg',
+          selectedIcon: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg',
+          onpressSelectedTab: 'my'
+        }
+      ]
     };
-  }
-  
-  renderContent(pageText) {
-  
   }
   
   render() {
@@ -26,7 +65,39 @@ class BottomNav extends Component {
           barTintColor="white"
           hidden={this.state.hidden}
         >
-          <TabBar.Item
+          {
+            this.state.navData.map((item, index) => {
+              return (
+                <TabBar.Item
+                  title={item.title}
+                  key={item.title}
+                  icon={<div style={{
+                    width: '0.44rem',
+                    height: '0.44rem',
+                    background: `url(${item.icon}) center center /  0.42rem 0.42rem no-repeat` }}
+                  />
+                  }
+                  selectedIcon={<div style={{
+                    width: '0.44rem',
+                    height: '0.44rem',
+                    background: `url(${item.selectedIcon}) center center /  0.42rem 0.42rem no-repeat` }}
+                  />
+                  }
+                  selected={this.state.selectedTab === item.onpressSelectedTab}
+                  badge={item.badge}
+                  dot={item.dot}
+                  onPress={() => {
+                    this.setState({
+                      selectedTab: item.onpressSelectedTab,
+                    });
+                  }}
+                />
+              )
+            })
+    
+          }
+          
+          {/*<TabBar.Item
             title="生活"
             key="生活"
             icon={<div style={{
@@ -48,7 +119,7 @@ class BottomNav extends Component {
                 selectedTab: 'blueTab',
               });
             }}
-            data-seed="logId"
+            // data-seed="logId"
           >
             {this.renderContent('生活')}
           </TabBar.Item>
@@ -66,8 +137,8 @@ class BottomNav extends Component {
             }}
             data-seed="logId1"
           >
-            {this.renderContent('口碑')}
           </TabBar.Item>
+          
           <TabBar.Item
             icon={
               <div style={{
@@ -93,8 +164,8 @@ class BottomNav extends Component {
               });
             }}
           >
-            {this.renderContent('朋友')}
           </TabBar.Item>
+          
           <TabBar.Item
             icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
             selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
@@ -107,8 +178,8 @@ class BottomNav extends Component {
               });
             }}
           >
-            {this.renderContent('我的')}
-          </TabBar.Item>
+          </TabBar.Item>*/}
+          
         </TabBar>
       </div>
     );
